@@ -1,0 +1,25 @@
+Rate Limiting :
+It is a technique used to control the amount of incoming or outgoing traffic to/from the system
+It ensures resources are not overwhelmed and that usage remains within predefined limits
+Commonly used in webservers apis and applications to prevent abuse, mange load and ensure fair usage
+
+Not an inbuilt function provided by Golang
+
+Why we use rate limiting?
+To prevent our system overload by too many requests
+It ensures equitable distribution of resources among users or clients
+
+Common Rate Limiting Algorithms:
+Token Bucket
+//Tokens are added at fixed rate and operations are only performed when tokens are available
+//It allows bursts of traffic while maintaining a steady rate over time
+Leaky Bucket
+//similar to tb but with a fixed rate
+//Requests are added to bucket and it leaks with a fixed rate
+//smooths out burst of traffic to ensure constant output rate
+Fixed Window Counter
+//it counts request within fixed time Window
+//if the count exceeds further requests are denied until the Window resets
+//simple to implement but may allow for burst at the window boundary
+Sliding Window Log
+Sliding Window Counter

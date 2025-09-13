@@ -1,0 +1,13 @@
+//A port in networking is a virtual point where network connecting start and end
+//It helps your computer distinguish between different types of network traffic
+//A computer has 65535 ports
+//0-1023 well known ports used by systems
+//80-->http web traffic
+//443 -->https
+//25 - smtp
+//21 - ftp
+//ports are for communicating with outside world, these are reserved entry points to internal processes for outside world
+//by design databases are communicated with outside world
+//similar case with api, by design they are meant to connect with outside world
+
+

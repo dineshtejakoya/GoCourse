@@ -1,0 +1,20 @@
+Logical Operators:
+!
+||
+&&
+
+Bitwise Operators:
+&
+|
+^ (XOR)
+&^(bitwise, and not)
+<<
+>>
+
+Comparision:
+==
+!=
+<
+<=
+>
+>=

@@ -1,0 +1,7 @@
+WARN: 2025/08/08 09:52:55 logging.go:39: This is a debug message
+Info: 2025/08/08 09:53:32 logging.go:39: This is a debug message
+Debug: 2025/08/08 09:54:15 logging.go:39: This is a debug message
+Debug: 2025/08/08 21:09:52 logging.go:41: This is a debug message
+Info: 2025/08/08 21:09:52 C:/Users/koyad/Documents/GoCourse/logging.go:42: This is a info message
+WARN: 2025/08/08 21:09:52 logging.go:43: This is a warn logger
+Error: 2025/08/08 21:09:52 logging.go:44: This is a error message
