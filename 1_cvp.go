@@ -48,7 +48,7 @@ func main() {
 	numThreads := 4
 
 	//GOMAXPROCS sets the max number of cpus that we can use simultaneously
-	//The number of operating system threads that we can use in execution of our program
+	//The number of operating system threads that we can use in execution of our programs
 	runtime.GOMAXPROCS(numThreads)
 	var wg sync.WaitGroup
 
