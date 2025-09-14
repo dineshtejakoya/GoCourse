@@ -1,5 +1,5 @@
 // Concurrency VS Parallelism
-package main
+package concurrency
 
 import (
 	"fmt"
