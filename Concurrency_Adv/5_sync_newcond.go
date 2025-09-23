@@ -1,4 +1,4 @@
-package main
+package concurrency
 
 import (
 	"fmt"
@@ -21,6 +21,7 @@ func newBuffer(size int) *buffer {
 	b := &buffer{
 		items: make([]int, 0, size),
 	}
+	//sync.NewCond creates a new conditionn variable associated with the buffers mutex which it takes as an argument
 	b.cond = sync.NewCond(&b.mu)
 	return b
 }
@@ -30,11 +31,14 @@ func (b *buffer) produce(item int) {
 	defer b.mu.Unlock()
 
 	for len(b.items) == bufferSize {
+		//pauses the goroutine until a signal is received indicating space is available
 		b.cond.Wait()
+		//releases the mutex temporarily and the for loop keeps on checking is equal to buffer size or not
 	}
 
 	b.items = append(b.items, item)
-	fmt.Println("Produced:", item)
+	fmt.Println("Produced:", item, time.Now())
+	//it wakes up the other goroutine
 	b.cond.Signal()
 }
 
@@ -48,13 +52,14 @@ func (b *buffer) consume() int {
 
 	item := b.items[0]
 	b.items = b.items[1:]
-	fmt.Println("Consumed:", item)
+	fmt.Println("Consumed:", item, time.Now())
 	b.cond.Signal()
 	return item
 }
 
 func producer(b *buffer, wg *sync.WaitGroup) {
 	defer wg.Done()
+	//we can give common value for range 10 in both producer and consumer
 	for i := range 10 {
 		b.produce(i + 100)
 		time.Sleep(100 * time.Millisecond)
