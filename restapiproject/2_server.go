@@ -1,4 +1,4 @@
-package restapiproject
+package restapi
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 //Note: localhost or 127.0.0.1 both the same thing
 
 //To create http server in go we need to define http handlers, which are functions
-//They simply put functions that handle the busienss logic for an endpoint
+//They simply put functions that handle the business logic for an endpoint
 //handler will take care what should happen when client sent a request to the endpoint
 
 // We also configure routes
@@ -36,6 +36,8 @@ func main() {
 
 }
 
-//instead of using address "127.0.0.1:3000" we can delete "127.0.0.1" and use the port itself
+//instead of using address "127.0.0.1:3000" we can delete "127.0.0.1" and use the port itself like const port string = ":3000"
 //then it will understand we are using localhost
 //note: the ip address of localhost is "127.0.0.1"
+
+//GO TO BROWSER http://127.0.0.1:3000/ OR http://localhost:3000
