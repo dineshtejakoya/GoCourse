@@ -1,0 +1,81 @@
+package middlewares
+
+import (
+	"fmt"
+	"net/http"
+	"strings"
+)
+
+type HPPOptions struct {
+	CheckQuery                  bool
+	CheckBody                   bool
+	CheckBodyOnlyForContentType string
+	//whitelist will contain list of accepted parameters whether it's query parameters or body parameters
+	Whitelist []string
+}
+
+func Hpp(options HPPOptions) func(http.Handler) http.Handler {
+	fmt.Println("HPP Middleware...")
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			fmt.Println("HPP Middleware being returned...")
+			if options.CheckBody && r.Method == http.MethodPost && isCoorectContentType(r, options.CheckBodyOnlyForContentType) {
+				//filter the body params
+				filterBodyParams(r, options.Whitelist)
+			}
+			if options.CheckBody && r.URL.Query() != nil {
+				//filter the query params
+				filterQueryParams(r, options.Whitelist)
+			}
+			next.ServeHTTP(w, r)
+			fmt.Println("HPP Middleware ends...")
+		})
+	}
+}
+
+func isCoorectContentType(r *http.Request, contentType string) bool {
+	return strings.Contains(r.Header.Get("Content-Type"), contentType)
+
+}
+
+func filterBodyParams(r *http.Request, whitelist []string) {
+	err := r.ParseForm()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	for k, v := range r.Form {
+		if len(v) > 1 {
+			r.Form.Set(k, v[0]) //accepts first value
+			//r.Form.Set(k,v[len(v)-1]) //accepts last value
+		}
+		if !isWhiteListed(k, whitelist) {
+			delete(r.Form, k)
+		}
+	}
+}
+
+func filterQueryParams(r *http.Request, whitelist []string) {
+	query := r.URL.Query()
+
+	for k, v := range query {
+		if len(v) > 1 {
+			query.Set(k, v[0]) //accepts first value
+			//query.Set(k,v[len(v)-1]) //accepts last value
+		}
+		if !isWhiteListed(k, whitelist) {
+			query.Del(k)
+		}
+	}
+	r.URL.RawQuery = query.Encode()
+}
+
+func isWhiteListed(param string, whitelist []string) bool {
+	for _, v := range whitelist {
+		if param == v {
+			return true
+		}
+	}
+	return false
+}

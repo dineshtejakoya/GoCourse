@@ -1,0 +1,14 @@
+[
+        {
+        "first_name": "Alice",
+        "last_name": "Brown",
+        "class": "6A",
+        "subject": "World History"
+    },
+    {
+        "first_name": "Bob",
+        "last_name": "White",
+        "class": "9B",
+        "subject": "Quantum Mechanics"
+    }
+]
